@@ -1,0 +1,5 @@
+.phpunit.result.cache
+/.vscode/
+/var/
+/vendor/
+composer.lock

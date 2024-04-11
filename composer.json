@@ -1,0 +1,34 @@
+{
+    "name": "max-antipin/php-code-sniffs",
+    "description": "A CodeSniffer sniffs",
+    "type": "phpcodesniffer-standard",
+    "authors": [
+        {
+            "name": "Maxim Antipin",
+            "email": "max.v.antipin@gmail.com",
+            "homepage": "https://github.com/max-antipin",
+            "role": "Developer"
+        }
+    ],
+    "license": "Unlicense",
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3"
+    },
+    "autoload": {
+        "psr-4": {
+            "MaxAntipin\\PHPCS\\Standards\\PSR12Ext\\Sniffs\\": "PSR12Ext\\Sniffs\\"
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "scripts": {
+        "cs": "@php ./vendor/bin/phpcs --ignore=vendor/,var/,*.inc",
+        "test:psr12": "@cs --standard=PSR12",
+        "test:psr12ext": "@cs --standard=PSR12Ext",
+        "fix-psr12": "@php ./vendor/bin/phpcbf --standard=PSR12 --ignore=vendor/,var/,*.inc"
+    }
+}
