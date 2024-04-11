@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd"
+         bootstrap="vendor/squizlabs/php_codesniffer/tests/bootstrap.php"
+         defaultTestSuite="All"
+         executionOrder="random"
+         requireCoverageMetadata="true"
+       failOnEmptyTestSuite="true"
+       failOnWarning="true"
+       failOnRisky="true"
+       failOnDeprecation="true"
+       failOnNotice="true"
+       failOnSkipped="true"
+       failOnIncomplete="true"
+         displayDetailsOnIncompleteTests="true"
+         displayDetailsOnSkippedTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+       beStrictAboutCoverageMetadata="true"
+       beStrictAboutOutputDuringTests="true"
+       beStrictAboutChangesToGlobalState="true">
+  <testsuites>
+    <testsuite name="All1234">
+      <directory>./PSR12Ext/Tests/Commenting/</directory>
+    </testsuite>
+    <testsuite name="All">
+      <file>./vendor/squizlabs/php_codesniffer/tests/Standards/AllSniffs.php</file>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./PSR12Ext/Sniffs/Commenting/</directory>
+    </include>
+  </source>
+  <coverage pathCoverage="true">
+    <report>
+      <text outputFile="/tmp/coverage.txt" showUncoveredFiles="false" showOnlySummary="true" />
+    </report>
+  </coverage>
+</phpunit>

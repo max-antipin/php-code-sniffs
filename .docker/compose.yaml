@@ -1,0 +1,23 @@
+version: '3.8'
+name: php-code-sniffs
+services:
+  php:
+    build:
+      context: ../.
+      dockerfile: ./.docker/Dockerfile
+    configs:
+      - source: phpunit
+        target: /usr/src/app/phpunit.phpcs.xml
+      - source: xdebug
+        target: /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    container_name: ${COMPOSE_PROJECT_NAME}-php
+    image: max-antipin/${COMPOSE_PROJECT_NAME}:latest
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ../PSR12Ext/:/usr/src/app/src/Standards/PSR12Ext/:ro
+configs:
+  phpunit:
+    file: ./phpunit.phpcs.xml
+  xdebug:
+    file: ./xdebug.ini
