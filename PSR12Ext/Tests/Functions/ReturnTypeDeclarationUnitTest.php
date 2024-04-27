@@ -25,6 +25,8 @@ final class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
         return [
             68 => 1,
             73 => 1,
+            75 => 1,
+            77 => 1,
         ];
     }
 
