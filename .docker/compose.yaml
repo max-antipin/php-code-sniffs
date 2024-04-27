@@ -1,5 +1,4 @@
-version: '3.8'
-name: php-code-sniffs
+name: php-code-sniffs-test
 services:
   php:
     build:
@@ -7,17 +6,19 @@ services:
       dockerfile: ./.docker/Dockerfile
     configs:
       - source: phpunit
-        target: /usr/src/app/phpunit.phpcs.xml
+        target: /usr/src/app/phpunit.xml
       - source: xdebug
         target: /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-    container_name: ${COMPOSE_PROJECT_NAME}-php
+    environment:
+      - PHPCS_IGNORE_TESTS=Generic,MySource,PEAR,PSR1,PSR12,PSR2,Squiz,Zend
     image: max-antipin/${COMPOSE_PROJECT_NAME}:latest
     restart: unless-stopped
     tty: true
     volumes:
       - ../PSR12Ext/:/usr/src/app/src/Standards/PSR12Ext/:ro
+      - ../coverage-report/:/tmp/coverage-report/
 configs:
   phpunit:
-    file: ./phpunit.phpcs.xml
+    file: ./phpunit.9.xml
   xdebug:
     file: ./xdebug.ini
