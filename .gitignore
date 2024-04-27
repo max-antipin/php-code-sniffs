@@ -1,5 +1,6 @@
 .phpunit.result.cache
 /.vscode/
+/coverage-report/
 /var/
 /vendor/
 composer.lock

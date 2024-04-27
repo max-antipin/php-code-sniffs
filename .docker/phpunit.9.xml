@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.2/phpunit.xsd"
+    backupGlobals="true"
+    beStrictAboutOutputDuringTests="true"
+    beStrictAboutTestsThatDoNotTestAnything="false"
+    bootstrap="tests/bootstrap.php"
+    convertErrorsToExceptions="true"
+    convertWarningsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertDeprecationsToExceptions="true"
+    forceCoversAnnotation="true">
+    <testsuites>
+        <testsuite name="My Test Suite">
+            <file>tests/Standards/AllSniffs.php</file>
+        </testsuite>
+    </testsuites>
+    <coverage pathCoverage="true">
+        <include>
+            <directory>src/Standards/PSR12Ext/</directory>
+        </include>
+        <exclude>
+            <directory>src/Standards/PSR12Ext/Tests/</directory>
+        </exclude>
+        <report>
+            <text outputFile="/tmp/coverage.txt" showUncoveredFiles="true" showOnlySummary="false" />
+        </report>
+    </coverage>
+</phpunit>
