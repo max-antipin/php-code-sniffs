@@ -9,6 +9,8 @@ docker compose -f .docker/compose.yaml up -d
 php ./vendor/bin/phpcs --ignore=vendor/,var/,*.inc --standard=PSR12Ext ./PSR12Ext/
 
 php ./vendor/bin/phpcs --ignore=vendor/,var/ --standard=PSR12Ext ./PSR12Ext/Tests/
+
+php ./vendor/bin/phpcs --ignore=vendor/,var/ --standard=PSR12Ext/testset.xml --sniffs=PSR12Ext.Functions.FunctionDeclarationArgumentType ./PSR12Ext/Tests/
 ```
 
 ```Shell

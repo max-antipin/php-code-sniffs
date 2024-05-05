@@ -13,23 +13,37 @@
     "license": "Unlicense",
     "require": {
         "php": ">=8.2",
-        "squizlabs/php_codesniffer": "^3"
+        "squizlabs/php_codesniffer": "^3",
+        "dealerdirect/phpcodesniffer-composer-installer": "*"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "phpcsstandards/phpcsdevtools": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "MaxAntipin\\PHPCS\\Standards\\PSR12Ext\\Sniffs\\": "PSR12Ext\\Sniffs\\"
+            "MaxAntipin\\PHPCS\\Standards\\PSR12Ext\\Sniffs\\": "PSR12Ext/Sniffs/"
         },
         "exclude-from-classmap": [
             "/Tests/"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "PHP_CodeSniffer\\": "vendor/squizlabs/php_codesniffer/src/",
+            "PHP_CodeSniffer\\Tests\\": "vendor/squizlabs/php_codesniffer/tests/"
+        }
+    },
     "scripts": {
         "cs": "@php ./vendor/bin/phpcs --ignore=vendor/,var/,*.inc",
+        "test:sniffs": "@php ./vendor/bin/phpcs-check-feature-completeness",
         "test:psr12": "@cs --standard=PSR12",
         "test:psr12ext": "@cs --standard=PSR12Ext",
         "fix-psr12": "@php ./vendor/bin/phpcbf --standard=PSR12 --ignore=vendor/,var/,*.inc"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
