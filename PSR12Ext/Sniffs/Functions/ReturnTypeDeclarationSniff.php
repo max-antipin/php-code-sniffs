@@ -28,7 +28,7 @@ class ReturnTypeDeclarationSniff implements Sniff
         $token = $tokens[$stackPtr];
         if (!isset($token['parenthesis_opener']) || !isset($token['parenthesis_closer'])) {
             $phpcsFile->addError(
-                'Unable to find argument list; checking has been aborted.',
+                'Possible parse error: unable to find argument list. Checking has been aborted.',
                 $stackPtr,
                 'MissingParenthesis'
             );
@@ -37,7 +37,7 @@ class ReturnTypeDeclarationSniff implements Sniff
         $methodProperties = $phpcsFile->getMethodProperties($stackPtr);
         if ($methodProperties['return_type'] === '') {
             $phpcsFile->addError(
-                'There must be a return type declaration',
+                'Return type missing in function declaration.',
                 $stackPtr,
                 'MissingReturnType'
             );

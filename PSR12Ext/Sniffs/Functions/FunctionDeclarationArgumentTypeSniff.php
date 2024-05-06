@@ -28,7 +28,7 @@ class FunctionDeclarationArgumentTypeSniff implements Sniff
         $token = $tokens[$stackPtr];
         if (!isset($token['parenthesis_opener']) || !isset($token['parenthesis_closer'])) {
             $phpcsFile->addError(
-                'Unable to find argument list; checking has been aborted.',
+                'Possible parse error: unable to find argument list. Checking has been aborted.',
                 $stackPtr,
                 'MissingParenthesis'
             );
@@ -51,6 +51,17 @@ class FunctionDeclarationArgumentTypeSniff implements Sniff
             $stackPtr = $tokens[$openBracket]['parenthesis_owner'];
         } else {
             $stackPtr = $phpcsFile->findPrevious(T_USE, ($openBracket - 1));
+            if (false === $stackPtr) {
+                $phpcsFile->addError(
+                    'Unknown error',
+                    $openBracket,
+                    'Unknown',
+                    [],
+                    9
+                );
+            }
+            # else: use condition found, skip it.
+            return;
         }
         $params = $phpcsFile->getMethodParameters($stackPtr);
         if (empty($params)) {
@@ -60,18 +71,20 @@ class FunctionDeclarationArgumentTypeSniff implements Sniff
             if ($param['type_hint_token'] === false) {
                 if ($param['variable_length']) {
                     $phpcsFile->addWarning(
-                        '...',
-                        $stackPtr,
-                        '',
-                        ['test' => true],
-                        0
+                        'Type hint missing for variable arguments "%s"',
+                        $param['token'],
+                        'MissingArgumentType',
+                        [$param['name']],
+                        5
+                    );
+                } else {
+                    $phpcsFile->addError(
+                        'Type hint missing for argument "%s"',
+                        $param['token'],
+                        'MissingArgumentType',
+                        [$param['name']]
                     );
                 }
-                $phpcsFile->addError(
-                    'There must be an argument type declaration',// Expected 1 space between type hint and argument "$a"; 4 found
-                    $stackPtr,
-                    'MissingArgumentType'
-                );
             }
         }
     }

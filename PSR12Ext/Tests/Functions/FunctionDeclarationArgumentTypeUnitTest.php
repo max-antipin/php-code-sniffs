@@ -6,14 +6,14 @@
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
 
-namespace PHP_CodeSniffer\Standards\Squiz\Tests\Functions;
+namespace MaxAntipin\PHPCS\Standards\PSR12Ext\Tests\Functions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
  * Unit test class for the FunctionDeclarationArgumentType sniff.
  *
- * @covers \PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions\FunctionDeclarationArgumentTypeSniff
+ * @covers \MaxAntipin\PHPCS\Standards\PSR12Ext\Sniffs\Functions\FunctionDeclarationArgumentTypeSniff
  */
 final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTest
 {
@@ -23,21 +23,22 @@ final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTes
     public function getErrorList()
     {
         return [
-            3   => 1,
-            5   => 2,
-            7   => 2,
-            8   => 2,
-            9   => 2,
-            11  => 2,
-            13  => 7,
-            14  => 2,
-            15  => 2,
-            16  => 4,
-            18  => 2,
+            4   => 1,
+            5   => 3,
+            6   => 2,
+            7   => 1,
+            9   => 1,
+            10  => 1,
+            11  => 3,
+            12  => 1,
+            13  => 1,
+            15  => 1,
+            19  => 1,
+            21  => 1,
+            25  => 2,
+            32  => 2,
+            33  => 1,
             35  => 2,
-            36  => 2,
-            44  => 2,
-            45  => 1,
             46  => 1,
             51  => 2,
             53  => 2,
@@ -59,7 +60,7 @@ final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTes
             102 => 2,
             106 => 1,
             107 => 2,
-            111 => 3,
+            111 => 2,
         ];
     }
 
@@ -68,6 +69,10 @@ final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTes
      */
     public function getWarningList()
     {
-        return [];
+        return [
+            32  => 1,
+            33  => 1,
+            37  => 1,
+        ];
     }
 }
