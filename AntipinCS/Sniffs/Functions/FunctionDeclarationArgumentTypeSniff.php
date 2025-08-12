@@ -6,7 +6,7 @@
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
 
-namespace MaxAntipin\PHPCS\Standards\PSR12Ext\Sniffs\Functions;
+namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;

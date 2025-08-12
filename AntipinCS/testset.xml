@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
-<ruleset name="PSR12Ext">
+<ruleset name="AntipinCS">
   <description>A test version of coding standard.</description>
 </ruleset>

@@ -6,14 +6,14 @@
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
 
-namespace MaxAntipin\PHPCS\Standards\PSR12Ext\Tests\Functions;
+namespace MaxAntipin\PHPCS\Standards\AntipinCS\Tests\Functions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
  * Unit test class for the FunctionDeclarationArgumentType sniff.
  *
- * @covers \MaxAntipin\PHPCS\Standards\PSR12Ext\Sniffs\Functions\FunctionDeclarationArgumentTypeSniff
+ * @covers \MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions\FunctionDeclarationArgumentTypeSniff
  */
 final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTest
 {

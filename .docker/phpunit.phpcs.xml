@@ -23,7 +23,7 @@
        beStrictAboutChangesToGlobalState="true">
   <testsuites>
     <testsuite name="All1234">
-      <directory>./PSR12Ext/Tests/Commenting/</directory>
+      <directory>./AntipinCS/Tests/Commenting/</directory>
     </testsuite>
     <testsuite name="All">
       <file>./vendor/squizlabs/php_codesniffer/tests/Standards/AllSniffs.php</file>
@@ -31,7 +31,7 @@
   </testsuites>
   <source>
     <include>
-      <directory suffix=".php">./PSR12Ext/Sniffs/Commenting/</directory>
+      <directory suffix=".php">./AntipinCS/Sniffs/Commenting/</directory>
     </include>
   </source>
   <coverage pathCoverage="true">

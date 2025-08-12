@@ -6,13 +6,13 @@ docker compose -f .docker/compose.yaml up -d
 ```
 
 ```Shell
-php ./vendor/bin/phpcs --ignore=vendor/,var/,*.inc --standard=PSR12Ext ./PSR12Ext/
+php ./vendor/bin/phpcs --ignore=vendor/,var/,*.inc --standard=AntipinCS ./AntipinCS/
 
-php ./vendor/bin/phpcs --ignore=vendor/,var/ --standard=PSR12Ext ./PSR12Ext/Tests/
+php ./vendor/bin/phpcs --ignore=vendor/,var/ --standard=AntipinCS ./AntipinCS/Tests/
 
-php ./vendor/bin/phpcs --ignore=vendor/,var/ --standard=PSR12Ext/testset.xml --sniffs=PSR12Ext.Functions.FunctionDeclarationArgumentType ./PSR12Ext/Tests/
+php ./vendor/bin/phpcs --ignore=vendor/,var/ --standard=AntipinCS/testset.xml --sniffs=AntipinCS.Functions.FunctionDeclarationArgumentType ./AntipinCS/Tests/
 ```
 
 ```Shell
-php ./vendor/bin/phpunit --filter PSR12Ext --no-coverage
+php ./vendor/bin/phpunit --filter AntipinCS --no-coverage
 ```

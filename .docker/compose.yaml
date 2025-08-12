@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ../PSR12Ext/:/usr/src/app/src/Standards/PSR12Ext/:ro
+      - ../AntipinCS/:/usr/src/app/src/Standards/AntipinCS/:ro
       - ../coverage-report/:/tmp/coverage-report/
 configs:
   phpunit:

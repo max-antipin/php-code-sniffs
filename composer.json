@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MaxAntipin\\PHPCS\\Standards\\PSR12Ext\\Sniffs\\": "PSR12Ext/Sniffs/"
+            "MaxAntipin\\PHPCS\\Standards\\AntipinCS\\Sniffs\\": "AntipinCS/Sniffs/"
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -43,7 +43,7 @@
         "cs": "@php ./vendor/bin/phpcs --ignore=vendor/,var/,*.inc",
         "test:sniffs": "@php ./vendor/bin/phpcs-check-feature-completeness",
         "test:psr12": "@cs --standard=PSR12",
-        "test:psr12ext": "@cs --standard=PSR12Ext",
+        "test:AntipinCS": "@cs --standard=AntipinCS",
         "fix-psr12": "@php ./vendor/bin/phpcbf --standard=PSR12 --ignore=vendor/,var/,*.inc"
     },
     "config": {
