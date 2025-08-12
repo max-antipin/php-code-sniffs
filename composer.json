@@ -2,6 +2,11 @@
     "name": "max-antipin/php-code-sniffs",
     "description": "A CodeSniffer sniffs",
     "type": "phpcodesniffer-standard",
+    "keywords": [
+        "dev",
+        "standards",
+        "static analysis"
+    ],
     "authors": [
         {
             "name": "Maxim Antipin",
