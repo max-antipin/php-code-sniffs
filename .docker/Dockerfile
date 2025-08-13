@@ -21,3 +21,6 @@ WORKDIR /usr/src/app/
 RUN set -eu; \
     git clone https://github.com/PHPCSStandards/PHP_CodeSniffer.git . \
  && composer install
+RUN set -eux; \
+    sed -i "s|\(memory_limit =\) [1-9]\+[a-zA-Z]\+|\1 1G|" "$PHP_INI_DIR/php.ini"
+# xdebug code coverage requires more memory than default amount.

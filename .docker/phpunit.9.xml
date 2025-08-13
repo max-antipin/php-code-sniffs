@@ -17,10 +17,10 @@
     </testsuites>
     <coverage pathCoverage="true">
         <include>
-            <directory>src/Standards/PSR12Ext/</directory>
+            <directory>src/Standards/AntipinCS/</directory>
         </include>
         <exclude>
-            <directory>src/Standards/PSR12Ext/Tests/</directory>
+            <directory>src/Standards/AntipinCS/Tests/</directory>
         </exclude>
         <report>
             <text outputFile="/tmp/coverage.txt" showUncoveredFiles="true" showOnlySummary="false" />

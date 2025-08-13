@@ -71,3 +71,7 @@ public function __debugInfo()
 }
 
 $myFunc = function(){};
+
+(function)
+
+function

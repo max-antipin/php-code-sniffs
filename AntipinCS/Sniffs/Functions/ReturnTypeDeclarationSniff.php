@@ -6,7 +6,7 @@
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
 
-namespace MaxAntipin\PHPCS\Standards\PSR12Ext\Sniffs\Functions;
+namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -25,13 +25,22 @@ class ReturnTypeDeclarationSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
-        if (!isset($tokens[$stackPtr]['parenthesis_opener']) || !isset($tokens[$stackPtr]['parenthesis_closer'])) {
+        $token = $tokens[$stackPtr];
+        if (!isset($token['parenthesis_opener']) || !isset($token['parenthesis_closer'])) {
+            $phpcsFile->addError(
+                'Possible parse error: unable to find argument list. Checking has been aborted.',
+                $stackPtr,
+                'MissingParenthesis'
+            );
             return;
         }
         $methodProperties = $phpcsFile->getMethodProperties($stackPtr);
         if ($methodProperties['return_type'] === '') {
-            $error = 'There must be a return type declaration';
-            $phpcsFile->addError($error, $stackPtr, 'MissingReturnType');
+            $phpcsFile->addError(
+                'Return type missing in function declaration.',
+                $stackPtr,
+                'MissingReturnType'
+            );
         }
     }
 }
