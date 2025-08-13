@@ -36,31 +36,15 @@ final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTes
             19  => 1,
             21  => 1,
             25  => 2,
-            32  => 2,
-            33  => 1,
-            35  => 2,
-            46  => 1,
-            51  => 2,
-            53  => 2,
-            55  => 1,
-            56  => 1,
-            58  => 1,
-            73  => 7,
-            76  => 1,
-            77  => 1,
-            81  => 1,
-            89  => 2,
-            92  => 1,
-            93  => 1,
-            94  => 1,
-            95  => 1,
-            99  => 11,
-            100 => 2,
-            101 => 2,
-            102 => 2,
-            106 => 1,
-            107 => 2,
-            111 => 2,
+            32  => 3,
+            33  => 2,
+            35  => 1,
+            37  => 1,
+            41  => 1,
+            43  => 1,
+            52  => 2,
+            58  => 2,
+            59  => 1,
         ];
     }
 
@@ -69,10 +53,6 @@ final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTes
      */
     public function getWarningList()
     {
-        return [
-            32  => 1,
-            33  => 1,
-            37  => 1,
-        ];
+        return [];
     }
 }
