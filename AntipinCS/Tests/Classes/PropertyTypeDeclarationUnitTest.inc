@@ -10,10 +10,6 @@ class MyClass
     static $var = null;
     public var $var = null; // Parse error.
 
-    public $_var = null;
-    protected $_var = null;
-    private $_var = null;
-
     public $foo, $bar, $var = null;
     public $foo,
            $bar,

@@ -27,33 +27,24 @@ final class PropertyTypeDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
+            4 => 1,
+            5 => 1,
+            6 => 1,
             7  => 1,
-            9  => 2,
+            9  => 1,
             10 => 1,
             11 => 1,
-            17 => 1,
-            18 => 1,
-            23 => 1,
+            13 => 1,
+            14 => 1,
+            19 => 1,
+            31 => 1,
+            32 => 1,
+            33 => 1,
+            34 => 1,
+            37 => 1,
             38 => 1,
-            41 => 1,
-            42 => 1,
-            50 => 2,
             51 => 1,
-            55 => 1,
-            56 => 1,
-            61 => 1,
-            62 => 1,
-            68 => 1,
-            69 => 1,
-            71 => 1,
-            72 => 1,
-            76 => 1,
-            80 => 1,
-            82 => 1,
-            84 => 1,
-            86 => 1,
         ];
-
     }
 
     /**
@@ -66,12 +57,6 @@ final class PropertyTypeDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [
-            13 => 1,
-            14 => 1,
-            15 => 1,
-            53 => 1,
-        ];
-
+        return [];
     }
 }
