@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Checks that arguments in function declarations has types.
+ * Checks that arguments in function declarations have types.
  *
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
@@ -69,22 +69,12 @@ class FunctionDeclarationArgumentTypeSniff implements Sniff
         }
         foreach ($params as $param) {
             if ($param['type_hint_token'] === false) {
-                if ($param['variable_length']) {
-                    $phpcsFile->addWarning(
-                        'Type hint missing for variable arguments "%s"',
-                        $param['token'],
-                        'MissingArgumentType',
-                        [$param['name']],
-                        5
-                    );
-                } else {
-                    $phpcsFile->addError(
-                        'Type hint missing for argument "%s"',
-                        $param['token'],
-                        'MissingArgumentType',
-                        [$param['name']]
-                    );
-                }
+                $phpcsFile->addError(
+                    'Type hint missing for ' . ($param['variable_length'] ? 'variable arguments' : 'argument') . ' "%s"',
+                    $param['token'],
+                    'MissingArgumentType',
+                    [$param['name']]
+                );
             }
         }
     }
