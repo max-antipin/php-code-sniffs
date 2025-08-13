@@ -11,7 +11,7 @@ namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-class FunctionDeclarationArgumentTypeSniff implements Sniff
+class ParameterTypeDeclarationSniff implements Sniff
 {
     public function register(): array
     {
@@ -70,9 +70,9 @@ class FunctionDeclarationArgumentTypeSniff implements Sniff
         foreach ($params as $param) {
             if ($param['type_hint_token'] === false) {
                 $phpcsFile->addError(
-                    'Type hint missing for ' . ($param['variable_length'] ? 'variable arguments' : 'argument') . ' "%s"',
+                    'Type hint missing for ' . ($param['variable_length'] ? 'variadic ' : '') . 'parameter "%s"',
                     $param['token'],
-                    'MissingArgumentType',
+                    'MissingParameterType',
                     [$param['name']]
                 );
             }

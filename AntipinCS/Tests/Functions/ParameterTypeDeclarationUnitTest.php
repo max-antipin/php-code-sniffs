@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit test class for the FunctionDeclarationArgumentType sniff.
+ * Unit test class for the ParameterTypeDeclaration sniff.
  *
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
@@ -11,11 +11,11 @@ namespace MaxAntipin\PHPCS\Standards\AntipinCS\Tests\Functions;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Unit test class for the FunctionDeclarationArgumentType sniff.
+ * Unit test class for the ParameterTypeDeclaration sniff.
  *
- * @covers \MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions\FunctionDeclarationArgumentTypeSniff
+ * @covers \MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions\ParameterTypeDeclarationSniff
  */
-final class FunctionDeclarationArgumentTypeUnitTest extends AbstractSniffUnitTest
+final class ParameterTypeDeclarationUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @return array<int, int>
