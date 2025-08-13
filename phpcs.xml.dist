@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="self-test-ruleset">
+  <description>Created to check this project.</description>
+  <file>AntipinCS/</file>
+  <rule ref="AntipinCS">
+      <include-pattern>*\.php$</include-pattern>
+  </rule>
+</ruleset>

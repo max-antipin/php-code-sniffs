@@ -1,9 +1,10 @@
 parameters:
     phpVersion: 80200
-    level: 4
+    level: 9
     paths:
         - AntipinCS
     excludePaths:
+        - var
         - vendor
     bootstrapFiles:
         - vendor/autoload.php
