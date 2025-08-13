@@ -1,7 +1,7 @@
 #syntax=docker/dockerfile:1.6
 
-ARG PHP_VERSION=8.2
-ARG COMPOSER_VERSION=2.6
+ARG PHP_VERSION=8.4
+ARG COMPOSER_VERSION=2.7
 
 FROM composer:${COMPOSER_VERSION} AS composer_image
 
@@ -19,7 +19,7 @@ RUN set -eu; \
 COPY --from=composer_image --link /usr/bin/composer /usr/local/bin/composer
 WORKDIR /usr/src/app/
 RUN set -eu; \
-    git clone https://github.com/PHPCSStandards/PHP_CodeSniffer.git . \
+    git clone https://github.com/PHPCSStandards/PHP_CodeSniffer.git --branch 3.13.2 --single-branch . \
  && composer install
 RUN set -eux; \
     sed -i "s|\(memory_limit =\) [1-9]\+[a-zA-Z]\+|\1 1G|" "$PHP_INI_DIR/php.ini"
