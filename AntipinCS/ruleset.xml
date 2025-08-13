@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <ruleset name="AntipinCS">
   <description>A custom coding standard.</description>
-  <rule ref="PSR12" />
+  <rule ref="PSR12"/>
+  <rule ref="Generic.PHP.ForbiddenFunctions"/>
+  <rule ref="Generic.PHP.RequireStrictTypes"/>
+  <rule ref="Squiz.PHP.Eval"/>
+  <rule ref="Squiz.PHP.GlobalKeyword"/>
+  <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
+  <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
 </ruleset>
