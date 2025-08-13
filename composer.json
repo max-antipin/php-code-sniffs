@@ -3,10 +3,13 @@
     "description": "A CodeSniffer sniffs",
     "type": "phpcodesniffer-standard",
     "keywords": [
+        "phpcs",
         "dev",
         "standards",
         "static analysis"
     ],
+    "minimum-stability": "dev",
+	"prefer-stable": true,
     "authors": [
         {
             "name": "Maxim Antipin",
@@ -19,10 +22,10 @@
     "require": {
         "php": ">=8.2",
         "squizlabs/php_codesniffer": "^3",
-        "dealerdirect/phpcodesniffer-composer-installer": "*"
+        "dealerdirect/phpcodesniffer-composer-installer": "^1"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan": "^2",
         "phpcsstandards/phpcsdevtools": "^1.0"
     },
     "autoload": {
