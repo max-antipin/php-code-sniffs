@@ -42,13 +42,6 @@
             "PHP_CodeSniffer\\Tests\\": "vendor/squizlabs/php_codesniffer/tests/"
         }
     },
-    "scripts": {
-        "cs": "@php ./vendor/bin/phpcs --ignore=vendor/,var/,*.inc",
-        "test:sniffs": "@php ./vendor/bin/phpcs-check-feature-completeness",
-        "test:psr12": "@cs --standard=PSR12",
-        "test:AntipinCS": "@cs --standard=AntipinCS",
-        "fix-psr12": "@php ./vendor/bin/phpcbf --standard=PSR12 --ignore=vendor/,var/,*.inc"
-    },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
