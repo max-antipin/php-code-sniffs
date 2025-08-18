@@ -1,6 +1,6 @@
 {
     "name": "max-antipin/php-code-sniffs",
-    "description": "A CodeSniffer sniffs",
+    "description": "Coding Standard for PHP_CodeSniffer by Max Antipin provides sniffs with additional checks.",
     "type": "phpcodesniffer-standard",
     "keywords": [
         "phpcs",
@@ -9,7 +9,7 @@
         "static analysis"
     ],
     "minimum-stability": "dev",
-	"prefer-stable": true,
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Maxim Antipin",
