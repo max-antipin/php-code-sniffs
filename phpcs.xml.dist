@@ -3,6 +3,6 @@
   <description>Created to check this project.</description>
   <file>AntipinCS/</file>
   <rule ref="AntipinCS">
-      <include-pattern>*\.php$</include-pattern>
+    <include-pattern>*\.php$</include-pattern>
   </rule>
 </ruleset>

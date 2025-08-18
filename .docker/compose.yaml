@@ -2,24 +2,42 @@ name: php-code-sniffs
 services:
   php-dev:
     build:
-      args: &build_args
+      args:
         - PHP_VERSION=${PHP_VERSION:-8.2}
       context: ../.
       dockerfile: ./.docker/Dockerfile
       target: dev_image
-    configs:
+    configs: &dev_configs
       - source: phpunit-cs
         target: /usr/src/cs-test/phpunit.xml
       - source: xdebug
         target: /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     container_name: ${COMPOSE_PROJECT_NAME}-dev
+    environment:
+      XDEBUG_CONFIG: client_port=${XDEBUG_CLIENT_PORT:-9003}
     image: max-antipin/${COMPOSE_PROJECT_NAME}:dev
     restart: unless-stopped
     tty: true
-    volumes:
+    volumes: &volumes
       - ../.:/usr/src/app/
       - ../AntipinCS/:/usr/src/cs-test/src/Standards/AntipinCS/:ro
       - ../var/coverage-report/:/tmp/coverage-report/
+  dev-coverage:
+    build:
+      args:
+        - PHP_VERSION=8.4
+      context: ../.
+      dockerfile: ./.docker/Dockerfile
+      target: dev_image
+    configs: *dev_configs
+    container_name: ${COMPOSE_PROJECT_NAME}-dev-coverage
+    command: ./test.sh
+    environment:
+      XDEBUG_MODE: coverage
+    image: max-antipin/${COMPOSE_PROJECT_NAME}:dev-coverage
+    profiles:
+      - dev-coverage
+    volumes: *volumes
 configs:
   phpunit-cs:
     file: ./phpunit.9.xml
