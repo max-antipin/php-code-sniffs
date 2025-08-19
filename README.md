@@ -22,6 +22,11 @@ Run all tests (or view this file to get list of commands for testing):
 ./test.sh
 ```
 
+Run all tests without creating one more service:
+```Shell
+PHP_VERSION=8.3 docker compose -f .docker/compose.yaml run --rm --build --quiet-build -e XDEBUG_MODE=off php-dev ./test.sh
+```
+
 Run service with test coverage:
 ```Shell
 docker compose -f .docker/compose.yaml up dev-coverage
@@ -61,4 +66,9 @@ if (defined('T_PRIVATE_SET') === false) {
                 // ...
             }
         }
+```
+
+Run test containers with all PHP versions and code coverage:
+```Shell
+docker compose -f .docker/compose-test.yaml up --quiet-build
 ```
