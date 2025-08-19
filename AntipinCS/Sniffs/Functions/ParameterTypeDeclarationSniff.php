@@ -6,6 +6,8 @@
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
 
+declare(strict_types=1);
+
 namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions;
 
 use PHP_CodeSniffer\Files\File;
@@ -22,7 +24,7 @@ class ParameterTypeDeclarationSniff implements Sniff
         ];
     }
 
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
@@ -44,7 +46,7 @@ class ParameterTypeDeclarationSniff implements Sniff
         }
     }
 
-    public function processBracket(File $phpcsFile, $openBracket)
+    public function processBracket(File $phpcsFile, int $openBracket): void
     {
         $tokens = $phpcsFile->getTokens();
         if (isset($tokens[$openBracket]['parenthesis_owner'])) {

@@ -6,6 +6,8 @@
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
 
+declare(strict_types=1);
+
 namespace MaxAntipin\PHPCS\Standards\AntipinCS\Tests\Functions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
@@ -20,7 +22,7 @@ final class ParameterTypeDeclarationUnitTest extends AbstractSniffUnitTest
     /**
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList(): array
     {
         return [
             4   => 1,
@@ -51,7 +53,7 @@ final class ParameterTypeDeclarationUnitTest extends AbstractSniffUnitTest
     /**
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList(): array
     {
         return [];
     }

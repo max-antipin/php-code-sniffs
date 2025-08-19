@@ -1,9 +1,12 @@
 <?php
+
 /**
  * Verifies that properties have type declaration.
  *
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
+
+declare(strict_types=1);
 
 namespace PHP_CodeSniffer\Standards\AntipinCS\Sniffs\Classes;
 
@@ -14,7 +17,7 @@ use PHP_CodeSniffer\Util\Tokens;
 
 class PropertyTypeDeclarationSniff extends AbstractVariableSniff
 {
-    protected function processMemberVar(File $phpcsFile, $stackPtr)
+    protected function processMemberVar(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -63,7 +66,7 @@ class PropertyTypeDeclarationSniff extends AbstractVariableSniff
      *
      * @return void
      */
-    protected function processVariable(File $phpcsFile, $stackPtr)
+    protected function processVariable(File $phpcsFile, $stackPtr): void
     {
         /*
             We don't care about normal variables.
@@ -78,7 +81,7 @@ class PropertyTypeDeclarationSniff extends AbstractVariableSniff
      *
      * @return void
      */
-    protected function processVariableInString(File $phpcsFile, $stackPtr)
+    protected function processVariableInString(File $phpcsFile, $stackPtr): void
     {
         /*
             We don't care about normal variables.
