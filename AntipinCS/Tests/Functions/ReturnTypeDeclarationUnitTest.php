@@ -23,6 +23,7 @@ final class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
     protected function getErrorList(): array
     {
         return [
+            65 => 1,
             68 => 1,
             73 => 1,
             75 => 1,

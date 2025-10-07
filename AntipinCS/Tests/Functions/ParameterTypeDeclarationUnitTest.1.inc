@@ -58,3 +58,9 @@ $a = function ($var1, $var2=false) use (
 fn ($a, $b = null) => $a($b);
 fn ($a, int $b = null) => $a($b);
 fn (int $a, int $b = null) => $a($b);
+
+$test22 = static function (string|object $param) {};
+$test33 = function (mixed ...$param) {};
+$test44 = static fn ($p1, $p2, mixed|Throwable ...$param) use ($test33) => $test33($p1, $p2, ...$params);
+$arrFn1 = static fn(int $x) => true;
+$arrFn2 = static fn($y) => true;

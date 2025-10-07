@@ -4,5 +4,11 @@
   <file>AntipinCS/</file>
   <rule ref="AntipinCS">
     <include-pattern>*\.php$</include-pattern>
+    <properties>
+      <property name="ignore" type="array">
+        <element key="Sniff" value="process"/>
+        <element key="AbstractVariableSniff" value="processMemberVar,processVariable,processVariableInString"/>
+      </property>
+		</properties>
   </rule>
 </ruleset>
