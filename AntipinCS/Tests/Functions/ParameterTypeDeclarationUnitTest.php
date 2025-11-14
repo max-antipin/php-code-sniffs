@@ -26,15 +26,15 @@ final class ParameterTypeDeclarationUnitTest extends AbstractSniffUnitTest
      *
      * @return string[]
      */
-    protected function getTestFiles($testFileBase)
+    protected function getTestFiles($testFileBase): array
     {
-        return array_map(static fn (int $i): string => $testFileBase.$i.'.inc', range(1, 4));
+        return array_map(static fn (int $i): string => $testFileBase . $i . '.inc', range(1, 4));
     }
 
     /**
      * @return array<int, int>
      */
-    public function getErrorList($testFile = ''): array
+    public function getErrorList(string $testFile = ''): array
     {
         return match ($testFile) {
             'ParameterTypeDeclarationUnitTest.1.inc' => [
@@ -69,7 +69,11 @@ final class ParameterTypeDeclarationUnitTest extends AbstractSniffUnitTest
             'ParameterTypeDeclarationUnitTest.3.inc' => [
                 7 => 2,
             ],
-            'ParameterTypeDeclarationUnitTest.4.inc' => [],
+            'ParameterTypeDeclarationUnitTest.4.inc' => [
+                7 => 1,
+                9 => 1,
+            ],
+            default => throw new \RuntimeException('Unhandled test file: ' . $testFile)
         };
     }
 

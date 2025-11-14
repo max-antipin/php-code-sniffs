@@ -22,10 +22,13 @@ class ParameterTypeDeclarationSniff implements Sniff
      * This sniff can cause an error if you're overriding a parent method
      * or implementing an interface which does not have typehints.
      *
-     * @var array<string, string|null>
+     * @var array<string, string>
      */
     public array $ignore = [];
 
+    /**
+     * @var array<string, array<string, string>> $itemsToIgnore
+     */
     private ?array $itemsToIgnore = null;
 
     public function register(): array
@@ -54,6 +57,9 @@ class ParameterTypeDeclarationSniff implements Sniff
             $use = $phpcsFile->findNext(T_USE, ($token['parenthesis_closer'] + 1), $token['scope_opener']);
             if ($use !== false) {
                 $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
+                if (false === $openBracket) {
+                    throw new \RuntimeException('Parse error');
+                }
                 $this->processBracket($phpcsFile, $openBracket);
             }
         }
@@ -145,6 +151,11 @@ class ParameterTypeDeclarationSniff implements Sniff
         return false;
     }
 
+    /**
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile
+     * @param int $cStackPtr
+     * @return array<int, string>
+     */
     private function getParentNames(File $phpcsFile, int $cStackPtr): array
     {
         $names = $phpcsFile->findImplementedInterfaceNames($cStackPtr) ?: [];
