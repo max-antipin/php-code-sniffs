@@ -1,9 +1,12 @@
 <?php
+
 /**
  * Unit test class for the PropertyTypeDeclaration sniff.
  *
  * @author    Max Antipin <max.v.antipin@gmail.com>
  */
+
+declare(strict_types=1);
 
 namespace PHP_CodeSniffer\Standards\AntipinCS\Tests\Classes;
 
@@ -24,7 +27,7 @@ final class PropertyTypeDeclarationUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList(): array
     {
         return [
             4 => 1,
@@ -55,7 +58,7 @@ final class PropertyTypeDeclarationUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList(): array
     {
         return [];
     }

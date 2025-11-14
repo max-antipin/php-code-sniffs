@@ -1,0 +1,19 @@
+<documentation title="Return Type Declaration">
+    <standard>
+    <![CDATA[
+.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: .">
+        <![CDATA[
+
+        ]]>
+        </code>
+        <code title="Invalid: .">
+        <![CDATA[
+
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

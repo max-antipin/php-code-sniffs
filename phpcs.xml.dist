@@ -3,6 +3,15 @@
   <description>Created to check this project.</description>
   <file>AntipinCS/</file>
   <rule ref="AntipinCS">
-      <include-pattern>*\.php$</include-pattern>
+    <include-pattern>*\.php$</include-pattern>
+  </rule>
+  <rule ref="AntipinCS.Functions.ParameterTypeDeclaration">
+    <properties>
+      <property name="ignore" type="array">
+        <element key="Sniff" value="process"/>
+        <element key="AbstractVariableSniff" value="processMemberVar,processVariable,processVariableInString"/>
+        <element key="AbstractSniffUnitTest" value="getTestFiles"/>
+      </property>
+		</properties>
   </rule>
 </ruleset>

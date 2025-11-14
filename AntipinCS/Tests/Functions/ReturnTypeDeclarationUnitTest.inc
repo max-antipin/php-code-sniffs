@@ -62,7 +62,7 @@ function functionName(?string $arg1, ?int &$arg2):
 ?string {}
 
 fn (?\DateTime $arg) : ?\DateTime => $arg;
-
+$test = static fn() => true;
 return (!$a ? [ new class { public function b(): c {} } ] : []);
 
 public function __debugInfo()

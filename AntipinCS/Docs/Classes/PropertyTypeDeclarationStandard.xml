@@ -1,0 +1,19 @@
+<documentation title="Property Type Declaration">
+    <standard>
+    <![CDATA[
+    All class properties must have types.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Property has type.">
+        <![CDATA[
+private string $name;
+        ]]>
+        </code>
+        <code title="Invalid: Untyped property.">
+        <![CDATA[
+private $name;
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

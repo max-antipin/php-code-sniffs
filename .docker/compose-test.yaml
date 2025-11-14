@@ -1,0 +1,42 @@
+name: php-code-sniffs-test
+
+x-php-service: &php-service
+  build: &php-build
+    additional_contexts:
+      git-files: ../.git/
+      source: ../.
+    args: &php-build-args
+      PHP_VERSION: 8.4
+    target: test_image
+  command: ["php", "./vendor/bin/phpunit", "--filter", "AntipinCS", "--no-coverage"]
+  environment:
+    XDEBUG_MODE: off
+  working_dir: /usr/src/cs-test/
+
+services:
+  php-84:
+    <<: *php-service
+    command: ["./test.sh"]
+    environment:
+      XDEBUG_MODE: coverage
+    volumes: &volumes
+      - ../var/coverage-report/:/tmp/coverage-report/
+    working_dir: /usr/src/app/
+  php-83:
+    <<: *php-service
+    build:
+      <<: *php-build
+      args:
+        PHP_VERSION: 8.3
+    depends_on:
+      php-84:
+        condition: service_completed_successfully
+  php-82:
+    <<: *php-service
+    build:
+      <<: *php-build
+      args:
+        PHP_VERSION: 8.2
+    depends_on:
+      php-83:
+        condition: service_completed_successfully

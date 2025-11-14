@@ -2,7 +2,19 @@
 <ruleset name="AntipinCS">
   <description>A custom coding standard.</description>
   <rule ref="PSR12"/>
-  <rule ref="Generic.PHP.ForbiddenFunctions"/>
+  <rule ref="Generic.PHP.ForbiddenFunctions">
+    <properties>
+      <property name="forbiddenFunctions" type="array">
+        <element key="sizeof" value="count"/>
+        <element key="delete" value="unset"/>
+        <element key="print" value="echo"/>
+        <element key="is_null" value="null"/>
+        <element key="create_function" value="null"/>
+        <element key="var_dump" value="null"/>
+        <element key="print_r" value="null"/>
+      </property>
+    </properties>
+  </rule>
   <rule ref="Generic.PHP.RequireStrictTypes"/>
   <rule ref="Squiz.PHP.Eval"/>
   <rule ref="Squiz.PHP.GlobalKeyword"/>

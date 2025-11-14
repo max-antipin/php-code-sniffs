@@ -12,7 +12,7 @@
     forceCoversAnnotation="true"
     executionOrder="random">
     <testsuites>
-        <testsuite name="My Test Suite">
+        <testsuite name="PHPCS Test Suite">
             <file>tests/Standards/AllSniffs.php</file>
         </testsuite>
     </testsuites>
@@ -24,7 +24,7 @@
             <directory>src/Standards/AntipinCS/Tests/</directory>
         </exclude>
         <report>
-            <text outputFile="/tmp/coverage.txt" showUncoveredFiles="true" showOnlySummary="false" />
+            <html outputDirectory="/tmp/coverage-report/" lowUpperBound="50" highLowerBound="90"/>
         </report>
     </coverage>
 </phpunit>

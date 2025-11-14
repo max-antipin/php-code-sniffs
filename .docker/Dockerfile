@@ -30,4 +30,11 @@ RUN set -eu; \
 WORKDIR /usr/src/app/
 
 FROM dev_image AS test_image
-# todo: copy files
+COPY --from=source . .
+RUN --mount=type=bind,from=git-files,source=.,target=.git,readonly \
+    set -eu; \
+    git clean --force; \
+    composer validate; \
+    composer install
+COPY phpunit.9.xml /usr/src/cs-test/phpunit.xml
+COPY --from=source ./AntipinCS/ /usr/src/cs-test/src/Standards/AntipinCS/
