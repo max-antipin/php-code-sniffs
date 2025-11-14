@@ -1,0 +1,19 @@
+<documentation title="Parameter Type Declaration">
+    <standard>
+    <![CDATA[
+    All parameters must have types.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: .">
+        <![CDATA[
+
+        ]]>
+        </code>
+        <code title="Invalid: .">
+        <![CDATA[
+
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
