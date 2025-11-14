@@ -19,5 +19,4 @@
   <rule ref="Squiz.PHP.Eval"/>
   <rule ref="Squiz.PHP.GlobalKeyword"/>
   <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
-  <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
 </ruleset>
