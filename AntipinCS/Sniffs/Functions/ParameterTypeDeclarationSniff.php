@@ -12,10 +12,18 @@ namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use ValueError;
+use PHP_CodeSniffer\Util\Tokens;
+use RuntimeException;
 
-class ParameterTypeDeclarationSniff implements Sniff
+class ParameterTypeDeclarationSniff implements Sniff, \JsonSerializable
 {
+    private const RX_FQCN =
+        '/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*(\\\\[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)+$/';
+
+    public function jsonSerialize(): array
+    {
+        return [];
+    }
     /**
      * A list of functions and methods to ignore.
      *
@@ -56,9 +64,9 @@ class ParameterTypeDeclarationSniff implements Sniff
         if ($token['code'] === T_CLOSURE) {
             $use = $phpcsFile->findNext(T_USE, ($token['parenthesis_closer'] + 1), $token['scope_opener']);
             if ($use !== false) {
-                $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
+                $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
                 if (false === $openBracket) {
-                    throw new \RuntimeException('Parse error');
+                    throw new RuntimeException('Parse error');
                 }
                 $this->processBracket($phpcsFile, $openBracket);
             }
@@ -119,6 +127,8 @@ class ParameterTypeDeclarationSniff implements Sniff
             // Anonymous or arrow functions can not be ignored.
             || $fToken['type'] !== 'T_FUNCTION'
             || false === ($cStackPtr = $phpcsFile->findPrevious(T_CLASS, $stackPtr))
+            // Private methods can not be ignored.
+            || $phpcsFile->getMethodProperties($stackPtr)['scope'] === 'private'
             || ($cToken = $tokens[$cStackPtr]) && ($cToken['level'] - $fToken['level'] > 1)
             || !($names = $this->getParentNames($phpcsFile, $cStackPtr))
         ) {
@@ -127,18 +137,18 @@ class ParameterTypeDeclarationSniff implements Sniff
         if ($this->itemsToIgnore === null) {
             $this->itemsToIgnore = [];
             foreach ($this->ignore as $class => $methods) {
-                if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $class)) {
-                    throw new ValueError();// todo: !!!
+                if (!preg_match(self::RX_FQCN, $class)) {
+                    throw new RuntimeException('Config error: invalid class or interface name: ' . $class);
                 }
                 foreach (explode(',', $methods) as $method) {
                     $method = trim($method);
                     if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $method)) {
-                        throw new ValueError();// todo: !!!
+                        throw new RuntimeException("Config error: invalid method name: $class::$method()");
                     }
                     $this->itemsToIgnore[$class][$method] = $method;
                 }
                 if (empty($this->itemsToIgnore[$class])) {
-                    throw new ValueError();// todo: error message
+                    throw new RuntimeException('Config error: no methods defined for ' . $class);
                 }
             }
         }
@@ -152,6 +162,141 @@ class ParameterTypeDeclarationSniff implements Sniff
     }
 
     /**
+     * Handles these cases:
+     * use ValueError;
+     * use \ErrorException;
+     * use PHP_CodeSniffer\Files\File;
+     * use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest as SomeKindOfTests;
+     * use PHPstan\Command\{AnalyseCommand,AnalyserResult as TmpResult,AnalyseApplication\TestApp};
+     * use function file_get_contents;
+     * use const JSON_BIGINT_AS_STRING;
+     *
+     * @return array<string, string>
+     */
+    protected function findClassImports(File $phpcsFile, ?int $limitPtr = null): array
+    {
+        $tokens = $phpcsFile->getTokens();
+        $imports = [];
+        $addImport = static function (string $alias, string $fqcn) use (&$imports): void {
+            if (isset($imports[$alias])) {
+                throw new RuntimeException('Duplicate alias');
+            }
+            $imports[$alias] = $fqcn;
+        };
+        $getTokenAs = static function (File $phpcsFile, int $startPtr, int $endPtr): int {
+            if (
+                false !== ($ptr = $phpcsFile->findPrevious(T_AS, $endPtr - 1, $startPtr))
+                && false !== ($ptr = $phpcsFile->findPrevious(T_STRING, $ptr - 1, $startPtr))
+            ) {
+                return $ptr;
+            }
+            return $endPtr;
+        };
+        $trimStringTokens = static function (File $phpcsFile, int &$startPtr, int &$endPtr): void {
+            $tokens = $phpcsFile->getTokens();
+            if ($tokens[$startPtr]['code'] !== T_STRING) {
+                $ptr = $phpcsFile->findNext(T_STRING, $startPtr, $endPtr);
+                if (false === $ptr) {
+                    throw new RuntimeException('Parse error');
+                }
+                $startPtr = $ptr;
+            }
+            if ($tokens[$endPtr]['code'] !== T_STRING) {
+                $ptr = $phpcsFile->findPrevious(T_STRING, $endPtr, $startPtr);
+                if (false === $ptr) {
+                    throw new RuntimeException('Parse error');
+                }
+                $endPtr = $ptr;
+            }
+        };
+        $start = 1;
+        static $skip = ['function' => 1, 'const' => 1];
+        while ($startPtr = $phpcsFile->findNext(T_USE, $start, $limitPtr)) {
+            $endPtr = $phpcsFile->findEndOfStatement($startPtr);
+            // Make sure this is not a closure USE group.
+            $ptr = $phpcsFile->findNext(Tokens::$emptyTokens, $startPtr + 1, $endPtr, true);
+            if (false === $ptr || $tokens[$ptr]['code'] === T_OPEN_PARENTHESIS) {
+                continue;
+            }
+            if ($phpcsFile->hasCondition($startPtr, Tokens::$ooScopeTokens) === true) {
+                // Import statements inside classes (use Something;).
+                break;
+            }
+            $startPtr = $ptr;
+            $start = $endPtr + 1;
+            if ($tokens[$startPtr]['code'] === T_STRING && isset($skip[strtolower($tokens[$startPtr]['content'])])) {
+                continue;
+            }
+            if (false !== ($ptr = $phpcsFile->findPrevious(Tokens::$emptyTokens, $endPtr - 1, $startPtr, true))) {
+                $endPtr = $ptr;
+            }
+            if ('PHPCS_T_CLOSE_USE_GROUP' === $tokens[$endPtr]['code']) {
+                $ptr = $phpcsFile->findPrevious(T_OPEN_USE_GROUP, $endPtr, $startPtr + 1);
+                if (false === $ptr) {
+                    throw new RuntimeException('Parse error');
+                }
+                $base = $phpcsFile->getTokensAsString($startPtr, $ptr - $startPtr);
+                foreach (
+                    (static function (
+                        File $phpcsFile,
+                        int $startPtr,
+                        int $limitPtr,
+                    ) use (
+                        $getTokenAs,
+                        $trimStringTokens
+                    ): \Generator {
+                        $tokens = $phpcsFile->getTokens();
+                        $endPtr = $limitPtr;
+                        $trimStringTokens($phpcsFile, $startPtr, $endPtr);
+                        // Foo as Bar - at least 5 tokens;
+                        // so if the number of tokens is less than 5, it's not an 'as' statement.
+                        if ($endPtr - $startPtr >= 4) {
+                            while (false !== ($ptr = $phpcsFile->findNext(T_COMMA, $startPtr, $endPtr))) {
+                                yield from (static function (
+                                    File $phpcsFile,
+                                    int $startPtr,
+                                    int $endPtr,
+                                ) use (
+                                    $getTokenAs,
+                                    $trimStringTokens
+                                ): \Generator {
+                                    $trimStringTokens($phpcsFile, $startPtr, $endPtr);
+                                    $tokens = $phpcsFile->getTokens();
+                                    $alias = $tokens[$endPtr]['content'];
+                                    $endPtr = $getTokenAs($phpcsFile, $startPtr, $endPtr);
+                                    yield $alias => $phpcsFile->getTokensAsString(
+                                        $startPtr,
+                                        $endPtr - $startPtr + 1
+                                    );
+                                })($phpcsFile, $startPtr, $ptr - 1);
+                                $startPtr = $ptr + 1;
+                            }
+                            $alias = $tokens[$endPtr]['content'];
+                            $endPtr = $getTokenAs($phpcsFile, $startPtr, $endPtr);
+                            yield $alias => $phpcsFile->getTokensAsString(
+                                $startPtr,
+                                $endPtr - $startPtr + 1
+                            );
+                        } else {
+                            yield $tokens[$endPtr]['content'] => $phpcsFile->getTokensAsString(
+                                $startPtr,
+                                $endPtr - $startPtr + 1
+                            );
+                        }
+                    })($phpcsFile, $ptr + 1, $endPtr - 1) as $alias => $cn
+                ) {
+                    $addImport($alias, $base . $cn);
+                }
+            } elseif (T_STRING === $tokens[$endPtr]['code']) {
+                $alias = $tokens[$endPtr]['content'];
+                $endPtr = $getTokenAs($phpcsFile, $startPtr, $endPtr);
+                $addImport($alias, $phpcsFile->getTokensAsString($startPtr, $endPtr - $startPtr + 1));
+            }
+        }
+        return $imports;
+    }
+
+    /**
      * @param \PHP_CodeSniffer\Files\File $phpcsFile
      * @param int $cStackPtr
      * @return array<int, string>
@@ -162,9 +307,10 @@ class ParameterTypeDeclarationSniff implements Sniff
         if ($extends = $phpcsFile->findExtendedClassName($cStackPtr)) {
             $names[] = $extends;
         }
-        foreach ($names as $name) {
-            if ($name[0] !== '\\') {
-                // todo: get FQCN!!!
+        $importStatements = $this->findClassImports($phpcsFile, $cStackPtr);
+        foreach ($names as &$name) {
+            if ($name[0] !== '\\' && isset($importStatements[$name])) {
+                $name = $importStatements[$name];
             }
         }
         return $names;
