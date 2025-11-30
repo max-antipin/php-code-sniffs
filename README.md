@@ -1,5 +1,17 @@
 # Sniffs for [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer) by Max Antipin
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=bugs)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
+
 ## Development & testing
 
 Start dev container:
