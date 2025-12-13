@@ -1,0 +1,73 @@
+name: Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ "master" ]
+    paths-ignore:
+      - '**.md'
+      - '**.xml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sonarqube:
+    name: SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Lint
+      run: echo "lint"
+
+  test:
+    runs-on: ubuntu-latest
+   # strategy:
+   #   matrix:
+   #     php-versions: ['8.2', '8.3', '8.4', '8.5']
+   #     coverage: [false]
+   #     exclude:
+   #       - php-versions: '8.4'
+   #         coverage: false
+   #     include:
+   #       - php-versions: '8.4'
+   #         coverage: true
+
+   # name: PHP ${{ matrix.php-versions }} on ${{ runner.os }} ${{ matrix.coverage && ' with code coverage' || '' }}"
+
+   # continue-on-error: ${{ matrix.coverage == true }}
+
+    steps:
+   # - uses: actions/checkout@v4
+
+   # - name: Validate composer.json and composer.lock
+   #   run: composer validate --strict
+
+   # - name: Cache Composer packages
+   #   id: composer-cache
+   #   uses: actions/cache@v3
+   #   with:
+   #     path: vendor
+   #     key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+   #     restore-keys: |
+   #       ${{ runner.os }}-php-
+
+   # - name: Install dependencies
+   #   run: composer install --prefer-dist --no-progress
+
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    - name: Run test suite
+      run: echo "composer run-script test"
