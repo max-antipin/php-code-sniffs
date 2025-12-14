@@ -42,8 +42,14 @@ jobs:
         coverage: none
     - name: Install dependencies
       run: composer install --no-autoloader --no-progress && composer dump-autoload --classmap-authoritative --strict-psr --strict-ambiguous
-    - name: Lint
-      run: echo "lint"
+    - name: Run phpcs
+      run: php ./vendor/bin/phpcs
+    - name: Run phpstan
+      run: php ./vendor/bin/phpstan analyze
+    - name: Run phpcs-check-feature-completeness
+      run: php ./vendor/bin/phpcs-check-feature-completeness
+    - name: Run export-ignore
+      run: php ./vendor/bin/export-ignore
 
   test:
     runs-on: ubuntu-latest
