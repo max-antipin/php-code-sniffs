@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace PHP_CodeSniffer\Standards\AntipinCS\Sniffs\Classes;
+namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Classes;
 
 use Exception;
 use PHP_CodeSniffer\Files\File;
