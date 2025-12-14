@@ -26,34 +26,49 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
+    env:
+      php_ver: '8.4'
     steps:
-    - name: Lint
-      run: echo "lint"
+    - uses: actions/checkout@v4
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ env.php_ver }}
+        #extensions: pdo_sqlite, sqlite3, mbstring
+        coverage: none
+    - name: Install dependencies
+      run: composer install --no-autoloader --no-progress && composer dump-autoload --classmap-authoritative --strict-psr --strict-ambiguous
+    - name: Run phpcs
+      run: php ./vendor/bin/phpcs
+    - name: Run phpstan
+      run: php ./vendor/bin/phpstan analyze
+    - name: Run phpcs-check-feature-completeness
+      run: php ./vendor/bin/phpcs-check-feature-completeness
+    - name: Run export-ignore
+      run: php ./vendor/bin/export-ignore
 
   test:
     runs-on: ubuntu-latest
-   # strategy:
-   #   matrix:
-   #     php-versions: ['8.2', '8.3', '8.4', '8.5']
-   #     coverage: [false]
-   #     exclude:
-   #       - php-versions: '8.4'
-   #         coverage: false
-   #     include:
-   #       - php-versions: '8.4'
-   #         coverage: true
+    strategy:
+      matrix:
+        php-versions: ['8.2', '8.3', '8.4', '8.5']
+        coverage: [false]
+        exclude:
+          - php-versions: '8.4'
+            coverage: false
+        include:
+          - php-versions: '8.4'
+            coverage: true
 
-   # name: PHP ${{ matrix.php-versions }} on ${{ runner.os }} ${{ matrix.coverage && ' with code coverage' || '' }}"
+    name: "PHP ${{ matrix.php-versions }} ${{ matrix.coverage && 'with code coverage' || '' }}"
 
    # continue-on-error: ${{ matrix.coverage == true }}
 
     steps:
-   # - uses: actions/checkout@v4
-
-   # - name: Validate composer.json and composer.lock
-   #   run: composer validate --strict
-
    # - name: Cache Composer packages
    #   id: composer-cache
    #   uses: actions/cache@v3
@@ -62,12 +77,6 @@ jobs:
    #     key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
    #     restore-keys: |
    #       ${{ runner.os }}-php-
-
-   # - name: Install dependencies
-   #   run: composer install --prefer-dist --no-progress
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
       run: echo "composer run-script test"

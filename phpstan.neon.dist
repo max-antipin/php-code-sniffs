@@ -4,7 +4,7 @@ parameters:
     paths:
         - AntipinCS
     excludePaths:
-        - var
+        - var (?)
         - vendor
     bootstrapFiles:
         - vendor/autoload.php

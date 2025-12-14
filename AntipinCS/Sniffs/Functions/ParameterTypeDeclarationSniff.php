@@ -15,15 +15,11 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 use RuntimeException;
 
-class ParameterTypeDeclarationSniff implements Sniff, \JsonSerializable
+class ParameterTypeDeclarationSniff implements Sniff
 {
     private const RX_FQCN =
         '/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*(\\\\[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)+$/';
 
-    public function jsonSerialize(): array
-    {
-        return [];
-    }
     /**
      * A list of functions and methods to ignore.
      *
