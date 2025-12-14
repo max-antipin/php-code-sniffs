@@ -8,14 +8,14 @@
 
 declare(strict_types=1);
 
-namespace PHP_CodeSniffer\Standards\AntipinCS\Tests\Classes;
+namespace MaxAntipin\PHPCS\Standards\AntipinCS\Tests\Classes;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
  * Unit test class for the PropertyTypeDeclaration sniff.
  *
- * @covers \PHP_CodeSniffer\Standards\AntipinCS\Sniffs\Classes\PropertyTypeDeclarationSniff
+ * @covers \MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Classes\PropertyTypeDeclarationSniff
  */
 final class PropertyTypeDeclarationUnitTest extends AbstractSniffUnitTest
 {
