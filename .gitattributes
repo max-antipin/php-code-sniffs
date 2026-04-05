@@ -1,10 +1,8 @@
-.*                export-ignore
-*.sh              export-ignore
-Makefile          export-ignore
-phpcs.xml.dist    export-ignore
-phpstan.neon.dist export-ignore
-phpunit.xml.dist  export-ignore
-Tests             export-ignore
+.*        export-ignore
+*.sh      export-ignore
+Makefile  export-ignore
+*.dist    export-ignore
+Tests     export-ignore
 
 *.sh        text eol=lf
 .docker/*   text eol=lf

@@ -16,7 +16,7 @@ x-php-service: &php-service
 services:
   php-84:
     <<: *php-service
-    command: ["./test.sh"]
+    command: ["make", "lint", "test-cs"]
     environment:
       XDEBUG_MODE: coverage
     volumes: &volumes

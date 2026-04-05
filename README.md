@@ -12,31 +12,30 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=max-antipin_php-code-sniffs&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=max-antipin_php-code-sniffs)
 
+```Shell
+composer require --dev max-antipin/php-code-sniffs
+```
+
 ## Development & testing
 
-Start dev container:
+Start a dev container and install dependencies:
 ```Shell
-docker compose -f .docker/compose.yaml up -d
+make up
 ```
 
-For the first time run:
+Enter the dev container:
 ```Shell
-docker exec php-code-sniffs-dev composer install
+make shell
 ```
 
-Enter dev container:
+Run all tests:
 ```Shell
-docker exec -it php-code-sniffs-dev sh
-```
-
-Run all tests (or view this file to get list of commands for testing):
-```Shell
-./test.sh
+make test-all
 ```
 
 Run all tests without creating one more service:
 ```Shell
-PHP_VERSION=8.3 docker compose -f .docker/compose.yaml run --rm --build --quiet-build -e XDEBUG_MODE=off php-dev ./test.sh
+PHP_VERSION=8.3 docker compose -f .docker/compose.yaml run --rm --build --quiet-build -e XDEBUG_MODE=off php-dev make test-all
 ```
 
 Run service with test coverage:
