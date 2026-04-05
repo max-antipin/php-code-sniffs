@@ -3,7 +3,7 @@ services:
   php-dev:
     build:
       args:
-        - PHP_VERSION=${PHP_VERSION:-8.2}
+        - PHP_VERSION=${PHP_VERSION:-8.3}
       context: ../.
       dockerfile: ./.docker/Dockerfile
       target: dev_image
@@ -31,7 +31,7 @@ services:
       target: dev_image
     configs: *dev_configs
     container_name: ${COMPOSE_PROJECT_NAME}-dev-coverage
-    command: ./test.sh
+    command: make test-cs lint
     environment:
       XDEBUG_MODE: coverage
     image: max-antipin/${COMPOSE_PROJECT_NAME}:dev-coverage

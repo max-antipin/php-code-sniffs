@@ -1,8 +1,8 @@
 #syntax=docker/dockerfile:1.16
 
-ARG PHP_VERSION=8.2
-ARG COMPOSER_VERSION=2.7
-ARG CS_BRANCH=3.13.2
+ARG PHP_VERSION=8.3
+ARG COMPOSER_VERSION=2.9
+ARG CS_BRANCH=3.13.5
 
 FROM composer:${COMPOSER_VERSION} AS composer_image
 
@@ -11,7 +11,7 @@ ARG CS_BRANCH
 RUN set -eu; \
     apk update \
  && apk upgrade \
- && apk add --no-cache git linux-headers \
+ && apk add --no-cache git linux-headers make \
  && apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
  && pecl install xdebug \
  && docker-php-ext-enable xdebug \
@@ -26,7 +26,8 @@ COPY --from=composer_image --link /usr/bin/composer /usr/local/bin/composer
 WORKDIR /usr/src/cs-test/
 RUN set -eu; \
     git clone https://github.com/PHPCSStandards/PHP_CodeSniffer.git --branch ${CS_BRANCH} --single-branch . \
- && composer install
+ && composer install \
+ && composer require --dev --no-scripts --no-plugins max-antipin/php-code-sniffs
 WORKDIR /usr/src/app/
 
 FROM dev_image AS test_image
@@ -35,6 +36,7 @@ RUN --mount=type=bind,from=git-files,source=.,target=.git,readonly \
     set -eu; \
     git clean --force; \
     composer validate; \
-    composer install
+    composer install --no-autoloader --no-progress; \
+    composer dump-autoload --classmap-authoritative --strict-psr --strict-ambiguous
 COPY phpunit.9.xml /usr/src/cs-test/phpunit.xml
 COPY --from=source ./AntipinCS/ /usr/src/cs-test/src/Standards/AntipinCS/
