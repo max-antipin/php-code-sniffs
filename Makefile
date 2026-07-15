@@ -2,6 +2,9 @@ up:
 	docker compose -f .docker/compose.yaml up -d --build
 	docker compose -f .docker/compose.yaml run --rm --remove-orphans php-dev composer install
 
+run-coverage:
+	docker compose -f .docker/compose.yaml run --rm php-dev-coverage make test-coverage
+
 down:
 	docker compose -f .docker/compose.yaml down
 
@@ -16,7 +19,13 @@ lint:
 	php ./vendor/bin/phpstan analyze
 	php ./vendor/bin/phpcs-check-feature-completeness
 
+fix-lint:
+	php ./vendor/bin/phpcbf
+
 test-cs:
+	cd ../cs-test/ && php ./vendor/bin/phpunit --no-coverage --filter AntipinCS
+
+test-coverage:
 	cd ../cs-test/ && XDEBUG_MODE=coverage php ./vendor/bin/phpunit --filter AntipinCS
 
 check-build:

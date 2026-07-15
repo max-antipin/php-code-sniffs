@@ -36,6 +36,14 @@ class ReturnTypeDeclarationSniff implements Sniff
             );
             return;
         }
+        static $skipMethods = ['__construct' => true, '__destruct' => true];
+        if (
+            $token['code'] !== 311
+            && ($methodName = $phpcsFile->getDeclarationName($stackPtr)) !== null
+            && isset($skipMethods[$methodName])
+        ) {
+            return;
+        }
         $methodProperties = $phpcsFile->getMethodProperties($stackPtr);
         if ($methodProperties['return_type'] === '') {
             $phpcsFile->addError(

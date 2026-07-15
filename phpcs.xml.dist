@@ -12,6 +12,6 @@
         <element key="PHP_CodeSniffer\Sniffs\AbstractVariableSniff" value="processMemberVar,processVariable,processVariableInString"/>
         <element key="PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest" value="getTestFiles"/>
       </property>
-		</properties>
+    </properties>
   </rule>
 </ruleset>
