@@ -26,7 +26,7 @@ final class ParameterTypeDeclarationUnitTest extends AbstractSniffUnitTest
      *
      * @return string[]
      */
-    protected function getTestFiles($testFileBase): array
+    protected function getTestFiles(string $testFileBase): array
     {
         return array_map(static fn (int $i): string => $testFileBase . $i . '.inc', range(1, 4));
     }

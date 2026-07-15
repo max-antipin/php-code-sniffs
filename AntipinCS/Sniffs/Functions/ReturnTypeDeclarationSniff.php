@@ -24,7 +24,7 @@ class ReturnTypeDeclarationSniff implements Sniff
         ];
     }
 
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
@@ -36,9 +36,10 @@ class ReturnTypeDeclarationSniff implements Sniff
             );
             return;
         }
+        static $skipTypes = ['T_CLOSURE' => true, 'T_FN' => true];
         static $skipMethods = ['__construct' => true, '__destruct' => true];
         if (
-            $token['code'] !== 311
+            !isset($skipTypes[$token['type']])
             && ($methodName = $phpcsFile->getDeclarationName($stackPtr)) !== null
             && isset($skipMethods[$methodName])
         ) {
