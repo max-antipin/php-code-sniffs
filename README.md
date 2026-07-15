@@ -83,3 +83,11 @@ Run test containers with all PHP versions and code coverage:
 ```Shell
 docker compose -f .docker/compose-test.yaml up --quiet-build
 ```
+
+Two errors with property hooks:
+- There must not be more than one property declared per statement
+- Missing type declaration for property "$this"
+
+```Shell
+cat AntipinCS/Tests/Functions/ReturnTypeDeclarationUnitTest.2.inc | ./vendor/bin/phpcs --stdin-path=/php-code-sniffs/AntipinCS/Tests/Functions/ReturnTypeDeclarationUnitTest.2.php -v -s -
+```
