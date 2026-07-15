@@ -17,7 +17,7 @@ use PHP_CodeSniffer\Util\Tokens;
 
 class PropertyTypeDeclarationSniff extends AbstractVariableSniff
 {
-    protected function processMemberVar(File $phpcsFile, $stackPtr): void
+    protected function processMemberVar(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -66,7 +66,7 @@ class PropertyTypeDeclarationSniff extends AbstractVariableSniff
      *
      * @return void
      */
-    protected function processVariable(File $phpcsFile, $stackPtr): void
+    protected function processVariable(File $phpcsFile, int $stackPtr): void
     {
         /*
             We don't care about normal variables.
@@ -81,7 +81,7 @@ class PropertyTypeDeclarationSniff extends AbstractVariableSniff
      *
      * @return void
      */
-    protected function processVariableInString(File $phpcsFile, $stackPtr): void
+    protected function processVariableInString(File $phpcsFile, int $stackPtr): void
     {
         /*
             We don't care about normal variables.
