@@ -3,7 +3,7 @@ services:
   php-dev:
     build:
       args:
-        - PHP_VERSION=${PHP_VERSION:-8.3}
+        - PHP_VERSION=${PHP_VERSION:-8.4}
       context: ../.
       dockerfile: ./.docker/Dockerfile
       target: dev_image
@@ -22,7 +22,7 @@ services:
       - ../.:/usr/src/app/
       - ../AntipinCS/:/usr/src/cs-test/src/Standards/AntipinCS/:ro
       - ../var/coverage-report/:/tmp/coverage-report/
-  dev-coverage:
+  php-dev-coverage:
     build:
       args:
         - PHP_VERSION=8.4

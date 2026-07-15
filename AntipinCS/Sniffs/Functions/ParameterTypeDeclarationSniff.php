@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions;
 
+use Generator;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
@@ -17,7 +18,7 @@ use RuntimeException;
 
 class ParameterTypeDeclarationSniff implements Sniff
 {
-    private const RX_FQCN =
+    private const string RX_FQCN =
         '/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*(\\\\[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)+$/';
 
     /**
@@ -120,10 +121,10 @@ class ParameterTypeDeclarationSniff implements Sniff
         $fToken = $tokens[$stackPtr];
         if (
             $this->itemsToIgnore === []
-            // Anonymous or arrow functions can not be ignored.
+            // Anonymous or arrow functions can't be ignored.
             || $fToken['type'] !== 'T_FUNCTION'
             || false === ($cStackPtr = $phpcsFile->findPrevious(T_CLASS, $stackPtr))
-            // Private methods can not be ignored.
+            // Private methods can't be ignored.
             || $phpcsFile->getMethodProperties($stackPtr)['scope'] === 'private'
             || ($cToken = $tokens[$cStackPtr]) && ($cToken['level'] - $fToken['level'] > 1)
             || !($names = $this->getParentNames($phpcsFile, $cStackPtr))
@@ -240,7 +241,7 @@ class ParameterTypeDeclarationSniff implements Sniff
                     ) use (
                         $getTokenAs,
                         $trimStringTokens
-                    ): \Generator {
+                    ): Generator {
                         $tokens = $phpcsFile->getTokens();
                         $endPtr = $limitPtr;
                         $trimStringTokens($phpcsFile, $startPtr, $endPtr);
@@ -255,7 +256,7 @@ class ParameterTypeDeclarationSniff implements Sniff
                                 ) use (
                                     $getTokenAs,
                                     $trimStringTokens
-                                ): \Generator {
+                                ): Generator {
                                     $trimStringTokens($phpcsFile, $startPtr, $endPtr);
                                     $tokens = $phpcsFile->getTokens();
                                     $alias = $tokens[$endPtr]['content'];
@@ -293,7 +294,7 @@ class ParameterTypeDeclarationSniff implements Sniff
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile
+     * @param File $phpcsFile
      * @param int $cStackPtr
      * @return array<int, string>
      */

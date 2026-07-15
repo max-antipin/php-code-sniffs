@@ -18,17 +18,33 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 final class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
 {
     /**
+     * Get a list of all test files to check.
+     *
+     * @param string $testFileBase The base path that the unit tests files will have.
+     *
+     * @return string[]
+     */
+    protected function getTestFiles($testFileBase): array
+    {
+        return array_map(static fn (int $i): string => $testFileBase . $i . '.inc', range(1, 2));
+    }
+
+    /**
      * @return array<int, int>
      */
-    protected function getErrorList(): array
+    protected function getErrorList(string $testFile = ''): array
     {
-        return [
-            65 => 1,
-            68 => 1,
-            73 => 1,
-            75 => 1,
-            77 => 1,
-        ];
+        return match ($testFile) {
+            'ReturnTypeDeclarationUnitTest.1.inc' => [
+                65 => 1,
+                68 => 1,
+                73 => 1,
+                75 => 1,
+                77 => 1,
+            ],
+            'ReturnTypeDeclarationUnitTest.2.inc' => [],
+            default => throw new \RuntimeException('Unhandled test file: ' . $testFile)
+        };
     }
 
     /**
