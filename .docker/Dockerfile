@@ -2,12 +2,11 @@
 
 ARG PHP_VERSION=8.4
 ARG COMPOSER_VERSION=2.10
-ARG CS_BRANCH=3.13.5
+ARG CS_BRANCH=4.0.1
 
 FROM composer:${COMPOSER_VERSION} AS composer_image
 
 FROM php:${PHP_VERSION}-cli-alpine AS dev_image
-ARG CS_BRANCH
 COPY --from=ghcr.io/mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN set -eu; \
   apk upgrade --no-cache --quiet; \
@@ -20,7 +19,8 @@ RUN set -eu; \
 # xdebug code coverage requires more memory than default amount.
 COPY --from=composer_image --link /usr/bin/composer /usr/local/bin/composer
 WORKDIR /usr/src/cs-test/
-RUN set -eu; \
+ARG CS_BRANCH
+RUN set -eux; \
     git clone https://github.com/PHPCSStandards/PHP_CodeSniffer.git --branch ${CS_BRANCH} --single-branch . \
  && composer install \
  && composer require --dev --no-scripts --no-plugins max-antipin/php-code-sniffs
@@ -34,5 +34,5 @@ RUN --mount=type=bind,from=git-files,source=.,target=.git,readonly \
     composer validate; \
     composer install --no-autoloader --no-progress; \
     composer dump-autoload --classmap-authoritative --strict-psr --strict-ambiguous
-COPY phpunit.9.xml /usr/src/cs-test/phpunit.xml
-COPY --from=source ./AntipinCS/ /usr/src/cs-test/src/Standards/AntipinCS/
+COPY --link phpunit.cs.xml /usr/src/cs-test/phpunit.xml
+COPY --from=source --link ./AntipinCS/ /usr/src/cs-test/src/Standards/AntipinCS/

@@ -10,14 +10,12 @@ declare(strict_types=1);
 
 namespace MaxAntipin\PHPCS\Standards\AntipinCS\Tests\Functions;
 
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions\ParameterTypeDeclarationSniff;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * Unit test class for the ParameterTypeDeclaration sniff.
- *
- * @covers \MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions\ParameterTypeDeclarationSniff
- */
-final class ParameterTypeDeclarationUnitTest extends AbstractSniffUnitTest
+#[CoversClass(ParameterTypeDeclarationSniff::class)]
+final class ParameterTypeDeclarationUnitTest extends AbstractSniffTestCase
 {
     /**
      * Get a list of all test files to check.

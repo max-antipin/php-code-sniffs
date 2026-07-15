@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace MaxAntipin\PHPCS\Standards\AntipinCS\Tests\Functions;
 
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions\ReturnTypeDeclarationSniff;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Functions\ReturnTypeDeclarationSniff
- */
-final class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
+#[CoversClass(ReturnTypeDeclarationSniff::class)]
+final class ReturnTypeDeclarationUnitTest extends AbstractSniffTestCase
 {
     /**
      * Get a list of all test files to check.

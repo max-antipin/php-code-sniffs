@@ -57,38 +57,7 @@ class ParameterTypeDeclarationSniff implements Sniff
             );
             return;
         }
-        $this->processBracket($phpcsFile, $token['parenthesis_opener']);
-        if ($token['code'] === T_CLOSURE) {
-            $use = $phpcsFile->findNext(T_USE, ($token['parenthesis_closer'] + 1), $token['scope_opener']);
-            if ($use !== false) {
-                $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
-                if (false === $openBracket) {
-                    throw new RuntimeException('Parse error');
-                }
-                $this->processBracket($phpcsFile, $openBracket);
-            }
-        }
-    }
-
-    protected function processBracket(File $phpcsFile, int $openBracket): void
-    {
-        $tokens = $phpcsFile->getTokens();
-        if (isset($tokens[$openBracket]['parenthesis_owner'])) {
-            $stackPtr = $tokens[$openBracket]['parenthesis_owner'];
-        } else {
-            $stackPtr = $phpcsFile->findPrevious(T_USE, ($openBracket - 1));
-            if (false === $stackPtr) {
-                $phpcsFile->addError(
-                    'Unknown error',
-                    $openBracket,
-                    'Unknown',
-                    [],
-                    9
-                );
-            }
-            # else: use condition found, skip it.
-            return;
-        }
+        $stackPtr = $token['parenthesis_owner'];
         $params = $phpcsFile->getMethodParameters($stackPtr);
         if (empty($params)) {
             return;
@@ -163,7 +132,7 @@ class ParameterTypeDeclarationSniff implements Sniff
      * use ValueError;
      * use \ErrorException;
      * use PHP_CodeSniffer\Files\File;
-     * use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest as SomeKindOfTests;
+     * use PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase as SomeKindOfTests;
      * use PHPstan\Command\{AnalyseCommand,AnalyserResult as TmpResult,AnalyseApplication\TestApp};
      * use function file_get_contents;
      * use const JSON_BIGINT_AS_STRING;

@@ -40,8 +40,7 @@ class ReturnTypeDeclarationSniff implements Sniff
         static $skipMethods = ['__construct' => true, '__destruct' => true];
         if (
             !isset($skipTypes[$token['type']])
-            && ($methodName = $phpcsFile->getDeclarationName($stackPtr)) !== null
-            && isset($skipMethods[$methodName])
+            && isset($skipMethods[$phpcsFile->getDeclarationName($stackPtr)])
         ) {
             return;
         }

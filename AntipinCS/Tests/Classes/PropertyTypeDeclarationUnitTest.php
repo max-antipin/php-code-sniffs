@@ -10,14 +10,12 @@ declare(strict_types=1);
 
 namespace MaxAntipin\PHPCS\Standards\AntipinCS\Tests\Classes;
 
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Classes\PropertyTypeDeclarationSniff;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * Unit test class for the PropertyTypeDeclaration sniff.
- *
- * @covers \MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Classes\PropertyTypeDeclarationSniff
- */
-final class PropertyTypeDeclarationUnitTest extends AbstractSniffUnitTest
+#[CoversClass(PropertyTypeDeclarationSniff::class)]
+final class PropertyTypeDeclarationUnitTest extends AbstractSniffTestCase
 {
     /**
      * Returns the lines where errors should occur.

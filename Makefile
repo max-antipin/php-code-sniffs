@@ -23,7 +23,7 @@ fix-lint:
 	php ./vendor/bin/phpcbf
 
 test-cs:
-	cd ../cs-test/ && php ./vendor/bin/phpunit --no-coverage --filter AntipinCS
+	cd ../cs-test/ && php ./vendor/bin/phpunit --no-coverage -v -s --filter AntipinCS
 
 test-coverage:
 	cd ../cs-test/ && XDEBUG_MODE=coverage php ./vendor/bin/phpunit --filter AntipinCS

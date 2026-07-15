@@ -40,6 +40,6 @@ services:
     volumes: *volumes
 configs:
   phpunit-cs:
-    file: ./phpunit.9.xml
+    file: ./phpunit.cs.xml
   xdebug:
     file: ./xdebug.ini
