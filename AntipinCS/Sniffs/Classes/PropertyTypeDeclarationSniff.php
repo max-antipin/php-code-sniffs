@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace MaxAntipin\PHPCS\Standards\AntipinCS\Sniffs\Classes;
 
-use Exception;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Util\Tokens;
@@ -24,25 +23,31 @@ class PropertyTypeDeclarationSniff extends AbstractVariableSniff
         // Detect multiple properties defined at the same time. Throw an error
         // for this, but also only process the first property in the list so we don't
         // repeat errors.
-        $find   = Tokens::$scopeModifiers;
-        $find[] = T_VARIABLE;
-        $find[] = T_VAR;
-        $find[] = T_READONLY;
-        $find[] = T_SEMICOLON;
-        $find[] = T_OPEN_CURLY_BRACKET;
-
-        $prev = $phpcsFile->findPrevious($find, ($stackPtr - 1));
-        if ($tokens[$prev]['code'] === T_VARIABLE) {
+        static $find = [...Tokens::SCOPE_MODIFIERS,
+            T_VARIABLE,
+            T_VAR,
+            T_READONLY,
+            T_FINAL,
+            T_ABSTRACT,
+            T_SEMICOLON,
+            T_OPEN_CURLY_BRACKET,
+        ];
+        $prevPtr = $phpcsFile->findPrevious($find, ($stackPtr - 1));
+        if ($tokens[$prevPtr]['code'] === T_VARIABLE) {
             return;
         }
-
-        try {
-            $propertyInfo = $phpcsFile->getMemberProperties($stackPtr);
-            if (empty($propertyInfo)) {
+        if ($tokens[$prevPtr]['code'] === T_OPEN_CURLY_BRACKET) {
+            $prevPtr = $phpcsFile->findPrevious(Tokens::EMPTY_TOKENS, $prevPtr - 1, null, true);
+            if ($tokens[$prevPtr]['content'] === 'get') {
                 return;
             }
-        } catch (Exception $e) {
-            // Turns out not to be a property after all.
+        }
+        $nextPtr = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, $stackPtr + 1, null, true);
+        static $exclude = [T_OBJECT_OPERATOR];
+        if (
+            in_array($tokens[$nextPtr]['code'], $exclude, true) ||
+            !($propertyInfo = $phpcsFile->getMemberProperties($stackPtr))
+        ) {
             return;
         }
         $property = $tokens[$stackPtr]['content'];

@@ -89,5 +89,5 @@ Two errors with property hooks:
 - Missing type declaration for property "$this"
 
 ```Shell
-cat AntipinCS/Tests/Functions/ReturnTypeDeclarationUnitTest.2.inc | ./vendor/bin/phpcs --stdin-path=/php-code-sniffs/AntipinCS/Tests/Functions/ReturnTypeDeclarationUnitTest.2.php -v -s -
+cat AntipinCS/Tests/Classes/PropertyTypeDeclarationUnitTest.2.inc | ./vendor/bin/phpcs --stdin-path=/php-code-sniffs/AntipinCS/Tests/Classes/PropertyTypeDeclarationUnitTest.2.php -v -s -
 ```
