@@ -15,7 +15,7 @@ check-dockerfile:
 	docker run --rm -i ghcr.io/hadolint/hadolint < .docker/Dockerfile
 
 lint:
-	php ./vendor/bin/phpcs
+	php ./vendor/bin/phpcs -v -s
 	php ./vendor/bin/phpstan analyze
 	php ./vendor/bin/phpcs-check-feature-completeness
 
@@ -23,7 +23,7 @@ fix-lint:
 	php ./vendor/bin/phpcbf
 
 test-cs:
-	cd ../cs-test/ && php ./vendor/bin/phpunit --no-coverage -v -s --filter AntipinCS
+	cd ../cs-test/ && php ./vendor/bin/phpunit --no-coverage --filter AntipinCS
 
 test-coverage:
 	cd ../cs-test/ && XDEBUG_MODE=coverage php ./vendor/bin/phpunit --filter AntipinCS

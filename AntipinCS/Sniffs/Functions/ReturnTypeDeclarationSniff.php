@@ -27,6 +27,7 @@ class ReturnTypeDeclarationSniff implements Sniff
     public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
+        /** @var array<string,int|string> $token */
         $token = $tokens[$stackPtr];
         if (!isset($token['parenthesis_opener']) || !isset($token['parenthesis_closer'])) {
             $phpcsFile->addError(
@@ -36,7 +37,9 @@ class ReturnTypeDeclarationSniff implements Sniff
             );
             return;
         }
+        /** @var array<string,bool> $skipTypes */
         static $skipTypes = ['T_CLOSURE' => true, 'T_FN' => true];
+        /** @var array<string,bool> $skipMethods */
         static $skipMethods = ['__construct' => true, '__destruct' => true];
         if (
             !isset($skipTypes[$token['type']])

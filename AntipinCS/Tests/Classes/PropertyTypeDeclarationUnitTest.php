@@ -18,6 +18,18 @@ use PHPUnit\Framework\Attributes\CoversClass;
 final class PropertyTypeDeclarationUnitTest extends AbstractSniffTestCase
 {
     /**
+     * Get a list of all test files to check.
+     *
+     * @param string $testFileBase The base path that the unit tests files will have.
+     *
+     * @return string[]
+     */
+    protected function getTestFiles(string $testFileBase): array
+    {
+        return array_map(static fn (int $i): string => $testFileBase . $i . '.inc', range(1, 2));
+    }
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -25,9 +37,10 @@ final class PropertyTypeDeclarationUnitTest extends AbstractSniffTestCase
      *
      * @return array<int, int>
      */
-    public function getErrorList(): array
+    public function getErrorList(string $testFile = ''): array
     {
-        return [
+        return match ($testFile) {
+            'PropertyTypeDeclarationUnitTest.1.inc' => [
             4 => 1,
             5 => 1,
             6 => 1,
@@ -45,7 +58,10 @@ final class PropertyTypeDeclarationUnitTest extends AbstractSniffTestCase
             37 => 1,
             38 => 1,
             51 => 1,
-        ];
+            ],
+            'PropertyTypeDeclarationUnitTest.2.inc' => [],
+            default => throw new \RuntimeException('Unhandled test file: ' . $testFile)
+        };
     }
 
     /**
